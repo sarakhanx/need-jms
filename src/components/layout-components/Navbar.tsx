@@ -11,6 +11,8 @@ import {
 import SearchBar from "./SearchBar"
 import { useState, Suspense } from "react"
 import { ThemeToggle } from "@/components/theme-toggle"
+import allComponents from "@/datas/components.js"
+import { usePathname } from 'next/navigation'
 
 const menu = [
     {label : "Dashboard", href : "/"},
@@ -18,50 +20,8 @@ const menu = [
     {label : "Create", href : "/create"},
 ]
 
-// เพิ่มส่วนนี้แทนการใช้ models139k
-const components = [
-    {
-        sequence: 0,
-        name: "โครงสร้างเหล็ก",
-        description: "ทำการเชื่อมโครงสร้างเหล็กกัลวาไนซ์",
-    },
-    {
-        sequence: 1,
-        name: "ผนัง",
-        description: "ทำการประกอบผนัง",
-    },
-    {
-        sequence: 2,
-        name: "พื้น",
-        description: "ทำการปูพื้นด้วยบอร์ด 18mm.",
-    },
-    {
-        sequence: 3,
-        name: "ฝ้า",
-        description: "ทำการติดตั้งฝ้า",
-    },
-    {
-        sequence: 4,
-        name: "ไฟฟ้า",
-        description: "ทำการติดตั้งไฟฟ้า",
-    },
-    {
-        sequence: 5,
-        name: "หลังคา",
-        description: "ทำการติดตั้งหลังคา",
-    },
-    {
-        sequence: 6,
-        name: "สุขภัณฑ์",
-        description: "ทำการติดตั้งสุขภัณฑ์",
-    },
-    {
-        sequence: 7,
-        name: "ทำความสะอาดและ QC",
-        description: "ทำการทำความสะอาดและ QC",
-    },
-]
-
+// menu สายการผลิต / Production Lines
+const components = allComponents;
 // เรียงลำดับตาม sequence เลย ไม่ต้องใช้ useState และ useEffect
 const uniqueComponents = Array.from(new Set(components.map(comp => comp.name)))
     .sort((a, b) => {
@@ -72,6 +32,20 @@ const uniqueComponents = Array.from(new Set(components.map(comp => comp.name)))
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
+    const pathname = usePathname()
+
+    // Function to get active component name from path
+    const getActiveComponent = () => {
+        if (pathname.startsWith('/produce-line/')) {
+            const decodedPath = decodeURIComponent(pathname.split('/').pop() || '')
+            if (uniqueComponents.includes(decodedPath)) {
+                return decodedPath
+            }
+        }
+        return null
+    }
+
+    const activeComponent = getActiveComponent()
 
     return (
         <div className="border-b">
@@ -111,16 +85,34 @@ const Navbar = () => {
                     
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline" className="w-full md:w-auto">สายการผลิต / Production Lines</Button>
+                            <Button variant="outline" className="w-full md:w-auto">
+                                {activeComponent ? (
+                                    <span className="flex items-center gap-2">
+                                        <span className="h-2 w-2 bg-primary rounded-full" />
+                                        {activeComponent}
+                                    </span>
+                                ) : (
+                                    "สายการผลิต / Production Lines"
+                                )}
+                            </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-[200px]">
                             {uniqueComponents.map((name) => (
-                                <DropdownMenuItem key={name} asChild>
+                                <DropdownMenuItem 
+                                    key={name} 
+                                    asChild
+                                    className={name === activeComponent ? "bg-muted" : ""}
+                                >
                                     <Link 
                                         href={`/produce-line/${encodeURIComponent(name)}`}
                                         className="w-full"
                                     >
-                                        <p className="text-sm font-bold -tracking-tighter">{name}</p>
+                                        <p className="text-sm font-bold -tracking-tighter">
+                                            {name === activeComponent && (
+                                                <span className="mr-2">•</span>
+                                            )}
+                                            {name}
+                                        </p>
                                     </Link>
                                 </DropdownMenuItem>
                             ))}

@@ -58,33 +58,6 @@ export default function ProductionLineClient({ componentName }: ProductionLineCl
     // Add page size options
     const pageSizeOptions = [10, 20, 50, 100]
 
-    // Add sorting function
-    // const sortJobs = (jobs: Job[]) => {
-    //     return [...jobs].sort((a, b) => {
-    //         switch (sortConfig.key) {
-    //             case 'name':
-    //             case 'model':
-    //             case 'respUser':
-    //                 return sortConfig.direction === 'asc' 
-    //                     ? (a[sortConfig.key] || '').localeCompare(b[sortConfig.key] || '')
-    //                     : (b[sortConfig.key] || '').localeCompare(a[sortConfig.key] || '')
-    //             case 'startDate':
-    //             case 'deadline':
-    //                 const dateA = new Date(a[sortConfig.key]).getTime()
-    //                 const dateB = new Date(b[sortConfig.key]).getTime()
-    //                 return sortConfig.direction === 'asc' ? dateA - dateB : dateB - dateA
-    //             case 'status':
-    //                 const componentA = a.components.find(c => c.name === componentName)
-    //                 const componentB = b.components.find(c => c.name === componentName)
-    //                 return sortConfig.direction === 'asc'
-    //                     ? (componentA?.status || '').localeCompare(componentB?.status || '')
-    //                     : (componentB?.status || '').localeCompare(componentA?.status || '')
-    //             default:
-    //                 return 0
-    //         }
-    //     })
-    // }
-
     // Modify fetchData to include sorting parameters
     const fetchData = async () => {
         try {
@@ -95,14 +68,12 @@ export default function ProductionLineClient({ componentName }: ProductionLineCl
             if (!response.ok) throw new Error('Failed to fetch jobs')
             const responseData = await response.json()
 
-            // Process status counts
             const statusCounts: StatusCount = {
                 [JOB_STATUS.DRAFT]: 0,
                 [JOB_STATUS.IN_PROGRESS]: 0,
                 [JOB_STATUS.DONE]: 0
             }
 
-            // Count statuses from all jobs
             responseData.jobs.forEach((job: ApiJob) => {
                 const components = job.components || []
                 components.forEach((comp) => {
@@ -112,7 +83,6 @@ export default function ProductionLineClient({ componentName }: ProductionLineCl
                 })
             })
 
-            // Transform jobs
             const transformedJobs = responseData.paginatedJobs.map((job: ApiJob) => ({
                 id: job.id,
                 name: job.name,
@@ -152,7 +122,6 @@ export default function ProductionLineClient({ componentName }: ProductionLineCl
         }
     }
 
-    // Add sort handler
     const handleSort = (key: string) => {
         setSortConfig(prevConfig => ({
             key,
@@ -160,7 +129,6 @@ export default function ProductionLineClient({ componentName }: ProductionLineCl
         }))
     }
 
-    // Add sort indicator component
     const SortIndicator = ({ column }: { column: string }) => {
         if (sortConfig.key !== column) return null
         return sortConfig.direction === 'asc' ? (
@@ -231,7 +199,7 @@ export default function ProductionLineClient({ componentName }: ProductionLineCl
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-lg">แบบร่าง / Draft</CardTitle>
+                                <CardTitle className="text-lg">ยังไม่ได้ดำเนินการ / Not Started</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <div className="text-3xl font-bold">
@@ -255,7 +223,7 @@ export default function ProductionLineClient({ componentName }: ProductionLineCl
 
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-lg">เสร็จสิ้น / Done</CardTitle>
+                                <CardTitle className="text-lg">เสร็จสิ้น / Completed</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <div className="text-3xl font-bold text-green-500">

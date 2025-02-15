@@ -6,15 +6,77 @@ import { useEffect, useState } from "react"
 import { JOB_STATUS, ComponentStats, DailyStats, OverallStats, AverageTimeStats, Job, JobComponent } from "@/types/types"
 import { format, subDays, startOfToday } from "date-fns"
 import { th } from 'date-fns/locale'
+import { Skeleton } from "@/components/ui/skeleton"
 
-
-// Theme colors from globals.css
 const THEME_COLORS = {
   chart1: 'hsl(var(--chart-1))',
   chart2: 'hsl(var(--chart-2))',
   chart3: 'hsl(var(--chart-3))',
   chart4: 'hsl(var(--chart-4))',
   chart5: 'hsl(var(--chart-5))',
+}
+const DashboardSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-8 p-8">
+      <div className="flex flex-col gap-4">
+        <h1 className="text-3xl font-bold">แดชบอร์ด / Dashboard</h1>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Overall Status Card Skeleton */}
+          <Card>
+            <CardHeader>
+              <CardTitle><Skeleton className="h-6 w-[250px]" /></CardTitle>
+              <CardDescription><Skeleton className="h-4 w-[300px]" /></CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[400px] flex justify-center items-center">
+                <Skeleton className="h-[300px] w-[300px] rounded-full" />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Component Status Card Skeleton */}
+          <Card>
+            <CardHeader>
+              <CardTitle><Skeleton className="h-6 w-[300px]" /></CardTitle>
+              <CardDescription><Skeleton className="h-4 w-[350px]" /></CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="h-[400px]">
+                <Skeleton className="h-full w-full" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Daily Progress Card Skeleton */}
+        <Card>
+          <CardHeader>
+            <CardTitle><Skeleton className="h-6 w-[280px]" /></CardTitle>
+            <CardDescription><Skeleton className="h-4 w-[400px]" /></CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[300px]">
+              <Skeleton className="h-full w-full" />
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Average Time Card Skeleton */}
+        <Card>
+          <CardHeader>
+            <CardTitle><Skeleton className="h-6 w-[350px]" /></CardTitle>
+            <CardDescription><Skeleton className="h-4 w-[450px]" /></CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="h-[400px]">
+              <Skeleton className="h-full w-full" />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
 }
 
 export default function Home() {
@@ -138,7 +200,7 @@ export default function Home() {
   }, [])
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">กำลังโหลด... / Loading...</div>
+    return <DashboardSkeleton />
   }
 
   return (

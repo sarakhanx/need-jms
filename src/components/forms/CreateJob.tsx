@@ -9,203 +9,8 @@ import { useRouter } from "next/navigation";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { FormData, JOB_STATUS, JobStatus, HouseModel, HouseComponent } from "@/types/types";
 import { Card, CardContent } from "../ui/card";
-const models79k: HouseModel = {
-    components: [
-        {
-            sequence: 0,
-            name: "โครงสร้างเหล็ก",
-            description: "ทำการเชื่อมโครงสร้างเหล็กกัลวาไนซ์",
-        },
-        {
-            sequence: 1,
-            name: "ผนัง",
-            description: "ทำการประกอบผนัง",
-        },
-        {
-            sequence: 2,
-            name: "พื้น",
-            description: "ทำการปูพื้นด้วยบอร์ด 18mm.",
-        },
-        {
-            sequence: 3,
-            name: "ฝ้า",
-            description: "ทำการติดตั้งฝ้า",
-        },
-        {
-            sequence: 4,
-            name: "ไฟฟ้า",
-            description: "ทำการติดตั้งไฟฟ้า",
-        },
-        {
-            sequence: 5,
-            name: "หลังคา",
-            description: "ทำการติดตั้งหลังคา",
-        },
-        {
-            sequence: 6,
-            name: "ทำความสะอาดและ QC",
-            description: "ทำการทำความสะอาดและ QC",
-        },
-    ],
-    status: "ร่าง",
-    resp_user: {
-        id: 1,
-        name: "สมชาย ใจดี",
-        email: "somchai@gmail.com",
-        phone: "081234567890",
-    },
-}
+import { HOUSE_MODELS, MODEL_DISPLAY_NAMES } from "@/datas/models copy.js";
 
-export const models109k: HouseModel = {
-    components: [
-        {
-            sequence: 0,
-            name: "โครงสร้างเหล็ก",
-            description: "ทำการเชื่อมโครงสร้างเหล็กกัลวาไนซ์",
-        },
-        {
-            sequence: 1,
-            name: "ผนัง",
-            description: "ทำการประกอบผนัง",
-        },
-        {
-            sequence: 2,
-            name: "พื้น",
-            description: "ทำการปูพื้นด้วยบอร์ด 18mm.",
-        },
-        {
-            sequence: 3,
-            name: "ฝ้า",
-            description: "ทำการติดตั้งฝ้า",
-        },
-        {
-            sequence: 4,
-            name: "ไฟฟ้า",
-            description: "ทำการติดตั้งไฟฟ้า",
-        },
-        {
-            sequence: 5,
-            name: "หลังคา",
-            description: "ทำการติดตั้งหลังคา",
-        },
-        {
-            sequence: 6,
-            name: "ทำความสะอาดและ QC",
-            description: "ทำการทำความสะอาดและ QC",
-        },
-    ],
-    status: "ร่าง",
-    resp_user: {
-        id: 1,
-        name: "สมชาย ใจดี",
-        email: "somchai@gmail.com",
-        phone: "081234567890",
-    },
-}
-
-export const models129k: HouseModel = {
-    components: [
-        {
-            sequence: 0,
-            name: "โครงสร้างเหล็ก",
-            description: "ทำการเชื่อมโครงสร้างเหล็กกัลวาไนซ์",
-        },
-        {
-            sequence: 1,
-            name: "ผนัง",
-            description: "ทำการประกอบผนัง",
-        },
-        {
-            sequence: 2,
-            name: "พื้น",
-            description: "ทำการปูพื้นด้วยบอร์ด 18mm.",
-        },
-        {
-            sequence: 3,
-            name: "ฝ้า",
-            description: "ทำการติดตั้งฝ้า",
-        },
-        {
-            sequence: 4,
-            name: "ไฟฟ้า",
-            description: "ทำการติดตั้งไฟฟ้า",
-        },
-        {
-            sequence: 5,
-            name: "หลังคา",
-            description: "ทำการติดตั้งหลังคา",
-        },
-        {
-            sequence: 6,
-            name: "สุขภัณฑ์",
-            description: "ทำการติดตั้งสุขภัณฑ์",
-        },
-        {
-            sequence: 7,
-            name: "ทำความสะอาดและ QC",
-            description: "ทำการทำความสะอาดและ QC",
-        },
-    ],
-    status: "ร่าง",
-    resp_user: {
-        id: 1,
-        name: "สมชาย ใจดี",
-        email: "somchai@gmail.com",
-        phone: "081234567890",
-    },
-}
-
-export const models139k: HouseModel = {
-    components: [
-        {
-            sequence: 0,
-            name: "โครงสร้างเหล็ก",
-            description: "ทำการเชื่อมโครงสร้างเหล็กกัลวาไนซ์",
-        },
-        {
-            sequence: 1,
-            name: "ผนัง",
-            description: "ทำการประกอบผนัง",
-        },
-        {
-            sequence: 2,
-            name: "พื้น",
-            description: "ทำการปูพื้นด้วยบอร์ด 18mm.",
-        },
-        {
-            sequence: 3,
-            name: "ฝ้า",
-            description: "ทำการติดตั้งฝ้า",
-        },
-        {
-            sequence: 4,
-            name: "ไฟฟ้า",
-            description: "ทำการติดตั้งไฟฟ้า",
-        },
-        {
-            sequence: 5,
-            name: "หลังคา",
-            description: "ทำการติดตั้งหลังคา",
-        },
-        {
-            sequence: 6,
-            name: "สุขภัณฑ์",
-            description: "ทำการติดตั้งสุขภัณฑ์",
-        },
-        {
-            sequence: 7,
-            name: "ทำความสะอาดและ QC",
-            description: "ทำการทำความสะอาดและ QC",
-        },
-    ],
-    status: "ร่าง",
-    resp_user: {
-        id: 1,
-        name: "สมชาย ใจดี",
-        email: "somchai@gmail.com",
-        phone: "081234567890",
-    },
-} 
 
 const CreateJob = () => {
     
@@ -325,18 +130,14 @@ const CreateJob = () => {
                                         </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent className="w-full">
-                                        <DropdownMenuItem onClick={() => handleModelSelect(models79k, "บ้าน 79K")}>
-                                            บ้าน 79K
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem onClick={() => handleModelSelect(models109k, "บ้าน 109K")}>
-                                            บ้าน 109K
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem onClick={() => handleModelSelect(models129k, "บ้าน 129K")}>
-                                            บ้าน 129K
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem onClick={() => handleModelSelect(models139k, "บ้าน 139K")}>
-                                            บ้าน 139K
-                                        </DropdownMenuItem>
+                                        {Object.entries(HOUSE_MODELS).map(([key, model]) => (
+                                            <DropdownMenuItem 
+                                                key={key}
+                                                onClick={() => handleModelSelect(model, MODEL_DISPLAY_NAMES[key as keyof typeof MODEL_DISPLAY_NAMES])}
+                                            >
+                                                {MODEL_DISPLAY_NAMES[key as keyof typeof MODEL_DISPLAY_NAMES]}
+                                            </DropdownMenuItem>
+                                        ))}
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </div>
@@ -394,7 +195,7 @@ const CreateJob = () => {
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value={JOB_STATUS.DRAFT}>แบบร่าง / Draft</SelectItem>
-                                        <SelectItem value={JOB_STATUS.IN_PROGRESS}>กำลังดำเนินการ / In Progress</SelectItem>
+                                        <SelectItem value={JOB_STATUS.IN_PROGRESS}>กำลังติดตาม / In Progress</SelectItem>
                                         <SelectItem value={JOB_STATUS.DONE}>เสร็จสิ้น / Done</SelectItem>
                                     </SelectContent>
                                 </Select>
